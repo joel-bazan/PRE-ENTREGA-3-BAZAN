@@ -1,2 +1,2 @@
 # ProyectoCoder
-#Estamos aprenfiendo python
+#Estamos aprendiendo python DJANGO y BDD
