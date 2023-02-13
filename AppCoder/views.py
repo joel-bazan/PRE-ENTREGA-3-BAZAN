@@ -28,3 +28,5 @@ def estudiantes(request):
     return render (request, 'AppCoder/estudiantes.html')
 
     #return HttpResponse("vista estudiantes")
+    
+"""def curso(self)"""
