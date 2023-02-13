@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body style="background-color: blue">
-    CURSOS
-</body>
-</html>
+{%extends "AppCoder/padre.html"%}
+
+    {%load static%}
+{%block contenidoQueCambia%}
+    <!--- aQUI SE VA A COLOCAR LO QUE SE CAMBIA Y ESTA ASOCIADO A ESTA VISTA-->
+    
+    <h1> CURSOS</h1>
+    <p>Se ha heredado todo desde la plantilla padre</p>
+
+    <h3>Aca va la info de los cursos</h3>
+    
+    {%endblock%}
