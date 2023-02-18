@@ -6,14 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario - Agregar curso</title>
 </head>
-<body>
-    <form action="/cursoFormulario/" method="POST">{% csrf_token %}
-        <p> Curso: <input type="text" name="curso"></p>
-        <p> Camada: <input type="text" name="camada"></p>
 
-        <input type="submit" value="enviar">
+<body>
+    {%if miFormulario.errors%}
+
+    <p style="color: red;"> Estan mal los datos, revisar</p>
+
+    {%endif%}
+
+    <form action="/cursoFormulario/" method="POST">{% csrf_token %}
+
+        <!-- Aca esta la magia de Django-->
+
+        <table>
+            {{miFormulario.as_table}}
+        </table>
 
     </form>
+
+    <input type="submit" value="Enviar">
 
 </body>
 </html>
