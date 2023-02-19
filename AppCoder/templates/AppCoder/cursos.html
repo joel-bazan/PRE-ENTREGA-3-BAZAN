@@ -1,12 +1,13 @@
-{%extends "AppCoder/padre.html"%}
+{% extends "AppCoder/padre.html" %}
 
-    {%load static%}
-{%block contenidoQueCambia%}
-    <!--- aQUI SE VA A COLOCAR LO QUE SE CAMBIA Y ESTA ASOCIADO A ESTA VISTA-->
-    
-    <h1> Cursos</h1>
-    <p>Se ha heredado todo desde la plantilla padre</p>
+{% load static %}
 
-    <h3>Aca va la info de los cursos</h3>
-    
-    {%endblock%}
+{% block contenidoQueCambia %}
+
+
+    <!--Aquí va lo que cambia, y lo asociado a está vista :) -->
+    <h1>Cursos</h1>
+    <p>Acá va la info de los cursos</p>
+
+
+{% endblock %}

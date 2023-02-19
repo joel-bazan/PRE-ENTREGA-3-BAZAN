@@ -8,13 +8,13 @@
 </head>
 
 <body>
-    {%if miFormulario.errors%}
+    {% if miFormulario.errors %}
 
     <p style="color: red;"> Estan mal los datos, revisar</p>
 
-    {%endif%}
+    {% endif %}
 
-    <form action="/cursoFormulario/" method="POST">{% csrf_token %}
+    <form action="" method="POST">{% csrf_token %}
 
         <!-- Aca esta la magia de Django-->
 
@@ -22,9 +22,9 @@
             {{miFormulario.as_table}}
         </table>
 
-    </form>
+        <input type="submit" value="Enviar">
 
-    <input type="submit" value="Enviar">
+    </form>
 
 </body>
 </html>

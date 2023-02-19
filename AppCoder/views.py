@@ -51,7 +51,7 @@ def cursoFormulario(request):
         print(miFormulario)
         if miFormulario.is_valid:
                informacion=miFormulario.cleaned_data
-               curso=Curso(nombre=informacion['curso'],camada=informacion['camada'])
+               curso=Curso(nombre=informacion['curso'],comision=informacion['comision'])
                curso.save()
                return render(request, "AppCoder/inicio.html")
 
@@ -59,4 +59,6 @@ def cursoFormulario(request):
          miFormulario=CursoFormulario()
     
     return render(request, "AppCoder/cursoFormulario.html", {"miFormulario":miFormulario})
-          
+
+#def busquedaCamada(request):
+
