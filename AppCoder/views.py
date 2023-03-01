@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from AppCoder.models import *
-from AppCoder.forms import CursoFormulario
+from AppCoder.forms import CursoFormulario, ProfesorFormulario
 
 
 # Create your views here.
@@ -17,7 +17,21 @@ def cursos(request):
 """
 
 def profesores(request):
-        return render (request, 'AppCoder/profesores.html')
+    if request.method == 'POST':
+        miFormulario = ProfesorFormulario(request.POST)
+        print(miFormulario)
+        
+        if miFormulario.is_valid:
+            informacion = miFormulario.cleaned_data
+            profesor = Profesor(nombre=informacion['nombre'], apellido=informacion['apellido'], 
+                                email=informacion['email'], profesion=informacion['profesion'])
+            profesor.save()
+            return render(request, "AppCoder/inicio.html")
+        
+    else:
+        miFormulario = ProfesorFormulario()
+        
+    return render(request, "AppCoder/profesores.html", {"miFormulario":miFormulario})        
 
    # return HttpResponse("vista profesores")
 
@@ -80,3 +94,42 @@ def buscar(request):
     #respuesta = f"Estoy buscando la comision nro: {request.GET['comision']}"
     
     return HttpResponse(respuesta)
+
+def leerProfesores(request):
+    profesores = Profesor.objects.all()
+    contexto = {"profesores": profesores}
+    return render(request, "AppCoder/leerProfesores.html", contexto)
+
+def eliminarProfesor(request, profesor_nombre):
+    profesor = Profesor.objects.get(nombre=profesor_nombre)
+    profesor.delete()
+    
+    profesores = Profesor.objects.all()
+    contexto= {"profesores":profesores}
+    return render(request, "AppCoder/leerProfesores.html", contexto)
+
+def editarProfesor(request, profesor_nombre):
+    profesor = Profesor.objects.get(nombre =profesor_nombre)
+    if request.method == 'POST':
+        miFormulario = ProfesorFormulario(request.POST)
+        print(miFormulario)
+        
+        if miFormulario.is_valid:
+            informacion = miFormulario.cleaned_data
+            
+            profesor.nombre = informacion['nombre']
+            profesor.apellido = informacion['apellido'] 
+            profesor.email = informacion['email']
+            profesor.profesion = informacion['profesion']
+            
+            profesor.save()
+            
+            return render(request, "AppCoder/inicio.html")
+        
+    else:
+        miFormulario = ProfesorFormulario(initial={'nombre':profesor.nombre, 
+                                                   'apellido':profesor.apellido, 
+                                                   'email':profesor.email, 
+                                                   'profesion': profesor.profesion})
+        
+    return render(request, "AppCoder/editarProfesor.html", {"miFormulario":miFormulario, "profesor_nombre":profesor_nombre})        
