@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from AppCoder.models import *
-from AppCoder.forms import CursoFormulario, ProfesorFormulario, UserRegisterForm
+from AppCoder.forms import CursoFormulario, ProfesorFormulario, UserRegisterForm, UserEditForm
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -138,6 +138,37 @@ def editarProfesor(request, profesor_nombre):
                                                    'profesion': profesor.profesion})
         
     return render(request, "AppCoder/editarProfesor.html", {"miFormulario":miFormulario, "profesor_nombre":profesor_nombre})        
+
+# Vista de editar el perfil
+@login_required
+def editarPerfil(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        miFormulario = UserEditForm(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+            usuario.last_name = informacion['last_name']
+            usuario.first_name = informacion['first_name']
+
+            usuario.save()
+
+            return render(request, "AppCoder/inicio.html")
+
+    else:
+
+        miFormulario = UserEditForm(initial={'email': usuario.email})
+
+    return render(request, "AppCoder/editarPerfil.html", {"miFormulario": miFormulario, "usuario": usuario})
+
 
 class CursoList(ListView):
     model = Curso
